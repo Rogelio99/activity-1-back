@@ -25,6 +25,8 @@ public class Producto {
     private int precio;
     @Column(nullable = false)
     private int stock;
+    @Column(nullable = false)
+    private Boolean activo = true;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "categoria_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -79,6 +81,22 @@ public class Producto {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     

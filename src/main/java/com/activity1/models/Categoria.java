@@ -11,12 +11,14 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column
+    @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false)
+    private Boolean activo = true;
 
-    public Categoria(int id, String nombre) {
-        this.id = id;
+    public Categoria(String nombre) {
         this.nombre = nombre;
+
     }
 
     public Categoria() {
@@ -36,6 +38,14 @@ public class Categoria {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
 }
