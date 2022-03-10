@@ -8,8 +8,9 @@ import java.util.Optional;
 import com.activity1.models.Categoria;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class CategoriasService {
     @Autowired
     private CategoriasRepository categoriasRepository;

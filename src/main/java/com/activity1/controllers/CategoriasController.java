@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.activity1.models.Categoria;
 import com.activity1.services.CategoriasService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,15 +17,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.Operation;
+
 import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
 @RequestMapping("/categorias")
 public class CategoriasController {
+    @Autowired
     private CategoriasService categoriasService;
 
     @GetMapping("/")
+    @Operation(summary = "Lista todas las categorias")
     public ResponseEntity<List<Categoria>> getCategorias() {
         try {
             List<Categoria> categorias = categoriasService.getCategorias();
@@ -35,6 +41,7 @@ public class CategoriasController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Busca una categoria por id")
     public ResponseEntity<Categoria> getCategoria(@PathVariable(value = "id") Long id) {
         try {
             Optional<Categoria> categoria = categoriasService.getCategoria(id);
@@ -48,9 +55,9 @@ public class CategoriasController {
     }
 
     @PostMapping("/")
+    @Operation(summary = "Crea una categoria")
     public ResponseEntity<Categoria> createCategoria(@RequestBody Categoria categoria) {
         try {
-            
             if (categoria.getNombre() == null || categoria.getNombre().isEmpty())
                 throw new Exception("El nombre de la categoria es obligatorio");
             if (categoria.getActivo() == null)
@@ -58,11 +65,13 @@ public class CategoriasController {
             Categoria categoriaCreated = categoriasService.createCategoria(categoria);
             return new ResponseEntity<>(categoriaCreated, HttpStatus.CREATED);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping(value="/{id}")
+    @Operation(summary = "Actualiza una categoria")
     public ResponseEntity<Categoria> updateCategoria(@PathVariable(value = "id") Long id, @RequestBody Categoria categoria) {
         try {
             if (categoria.getNombre() == null || categoria.getNombre().isEmpty())
@@ -77,6 +86,7 @@ public class CategoriasController {
     }
 
     @PatchMapping(value="/{id}")
+    @Operation(summary = "Actualiza el estado de una categoria")
     public ResponseEntity<Categoria> changeStatus(@PathVariable(value = "id") Long id) {
         try {
             categoriasService.changeStatus(id);
@@ -87,6 +97,7 @@ public class CategoriasController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Elimina una categoria")
     public ResponseEntity<Categoria> deleteCategoria(@PathVariable(value = "id") Long id) {
         try {
             categoriasService.deleteCategoria(id);

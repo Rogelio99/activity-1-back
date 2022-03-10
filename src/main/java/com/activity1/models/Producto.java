@@ -12,24 +12,33 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @Entity
+@Schema(description = "Productos de la tienda")
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(nullable = false)
+    @Schema(description = "Nombre del producto")
     private String nombre;
     @Column(nullable = false)
+    @Schema(description = "Descripción del producto")
     private String descripcion;
     @Column(nullable = false)
+    @Schema(description = "Precio del producto")
     private int precio;
     @Column(nullable = false)
+    @Schema(description = "Cantidad del producto")
     private int stock;
     @Column(nullable = false)
+    @Schema(description = "Activo del producto")
     private Boolean activo = true;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "categoria_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Schema(description = "Categoria a la que pertenece el producto")
     private Categoria categoria;
 
     public Producto(String nombre, String descripcion, int precio, int stock, Categoria categoria) {

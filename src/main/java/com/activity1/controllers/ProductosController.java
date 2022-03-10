@@ -8,6 +8,10 @@ import com.activity1.services.ProductosService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.Operation;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +25,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("/productos")
 public class ProductosController {
+    @Autowired
     private ProductosService productosService;
 
     @PostMapping("/")
+    @Operation(summary = "Crea un producto")
     public ResponseEntity<Producto> createProducto(@RequestBody Producto producto) {
         try {
             if (producto.getNombre() == null || producto.getNombre().isEmpty())
@@ -44,6 +50,7 @@ public class ProductosController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Busca un producto por id")
     public ResponseEntity<Producto> getProducto(@PathVariable(value = "id") Long id) {
         try {
             Optional<Producto> producto = productosService.getProducto(id);
@@ -57,16 +64,23 @@ public class ProductosController {
     }
 
     @GetMapping("/")
+    @Operation(summary = "Busca todos los productos")
     public ResponseEntity<List<Producto>> getProductos() {
         try {
             List<Producto> productos = productosService.getProductos();
-            return new ResponseEntity<>(productos, HttpStatus.OK);
+            if (productos.size() > 0)
+                return new ResponseEntity<>(productos, HttpStatus.OK);
+            else{
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Actualiza un producto")
     public ResponseEntity<Producto> updateProducto(@PathVariable(value = "id") Long id, @RequestBody Producto producto) {
         try {
             if (producto.getNombre() == null || producto.getNombre().isEmpty())
@@ -87,6 +101,7 @@ public class ProductosController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Actualiza el status de un producto")
     public ResponseEntity<Producto> changeStatus(@PathVariable(value = "id") Long id) {
         try {
             productosService.changeStatus(id);
@@ -97,6 +112,7 @@ public class ProductosController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Elimina un producto")
     public ResponseEntity<Void> deleteProducto(@PathVariable(value = "id") Long id) {
         try {
             productosService.deleteProducto(id);

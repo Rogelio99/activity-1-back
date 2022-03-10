@@ -6,12 +6,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @Entity
+@Schema(description = "Categorias de productos")
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(nullable = false)
+    @Schema(description = "Nombre de la categoria")
     private String nombre;
     @Column(nullable = false)
     private Boolean activo = true;
