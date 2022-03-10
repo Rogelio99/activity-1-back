@@ -13,26 +13,30 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column(nullable = false)
     @Schema(description = "Nombre de la categoria")
     private String nombre;
     @Column(nullable = false)
     private Boolean activo = true;
 
+    public Categoria(String nombre, Boolean activo) {
+        this.nombre = nombre;
+        this.activo = activo;
+    }
+
     public Categoria(String nombre) {
         this.nombre = nombre;
-
     }
 
     public Categoria() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -50,6 +50,7 @@ public class CategoriasController {
             else
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -79,9 +80,9 @@ public class CategoriasController {
             if (categoria.getActivo() == null)
                 throw new Exception("El campo activo es obligatorio");
             Categoria categoriaUpdated = categoriasService.updateCategoria(id, categoria);
-            return new ResponseEntity<>(categoriaUpdated, HttpStatus.OK);
+            return new ResponseEntity<>(categoriaUpdated, HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -92,7 +93,7 @@ public class CategoriasController {
             categoriasService.changeStatus(id);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -103,7 +104,7 @@ public class CategoriasController {
             categoriasService.deleteCategoria(id);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 

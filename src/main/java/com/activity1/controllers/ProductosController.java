@@ -87,9 +87,9 @@ public class ProductosController {
             if (producto.getStock() == 0 || producto.getStock() < 0)
                 throw new Exception("El stock del producto es obligatorio");
             Producto productoUpdated = productosService.updateProducto(id, producto);
-            return new ResponseEntity<>(productoUpdated, HttpStatus.OK);
+            return new ResponseEntity<>(productoUpdated, HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -98,9 +98,9 @@ public class ProductosController {
     public ResponseEntity<Producto> changeStatus(@PathVariable(value = "id") Long id) {
         try {
             productosService.changeStatus(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -109,9 +109,9 @@ public class ProductosController {
     public ResponseEntity<Void> deleteProducto(@PathVariable(value = "id") Long id) {
         try {
             productosService.deleteProducto(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
     
