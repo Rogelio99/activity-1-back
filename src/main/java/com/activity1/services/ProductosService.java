@@ -30,7 +30,7 @@ public class ProductosService {
         Producto productoToUpdate = productoRepository.findById(id).get();
         productoToUpdate.setNombre(producto.getNombre());
         productoToUpdate.setActivo(producto.getActivo());
-        productoToUpdate.setCategoria(producto.getCategoria());
+        productoToUpdate.setCategoria_id(producto.getCategoria_id());
         productoToUpdate.setDescripcion(producto.getDescripcion());
         productoToUpdate.setPrecio(producto.getPrecio());
         productoToUpdate.setStock(producto.getStock());

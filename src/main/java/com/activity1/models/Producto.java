@@ -2,24 +2,22 @@ package com.activity1.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Schema(description = "Productos de la tienda")
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column(nullable = false)
     @Schema(description = "Nombre del producto")
     private String nombre;
@@ -35,24 +33,23 @@ public class Producto {
     @Column(nullable = false)
     @Schema(description = "Activo del producto")
     private Boolean activo = true;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "categoria_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    //@JoinColumn(name = "categoria_id", nullable = false)
     @Schema(description = "Categoria a la que pertenece el producto")
-    private Categoria categoria;
+    private int categoria_id;
 
-    public Producto(String nombre, String descripcion, int precio, int stock, Categoria categoria) {
+    public Producto(String nombre, String descripcion, int precio, int stock, int categoria_id) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.stock = stock;
-        this.categoria = categoria;
+        this.categoria_id = categoria_id;
     }
 
     public Producto() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -100,13 +97,15 @@ public class Producto {
         this.activo = activo;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public int getCategoria_id() {
+        return categoria_id;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategoria_id(int categoria_id) {
+        this.categoria_id = categoria_id;
     }
+
+    
 
     
 }

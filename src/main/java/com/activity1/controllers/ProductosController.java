@@ -34,8 +34,6 @@ public class ProductosController {
         try {
             if (producto.getNombre() == null || producto.getNombre().isEmpty())
                 throw new Exception("El nombre del producto es obligatorio");
-            if (producto.getCategoria() == null || producto.getNombre().isEmpty())
-                throw new Exception("La categoria del producto es obligatoria");
             if (producto.getPrecio() == 0 || producto.getPrecio() < 0)
                 throw new Exception("El precio del producto es obligatorio");
             if (producto.getDescripcion() == null || producto.getDescripcion().isEmpty())
@@ -59,6 +57,7 @@ public class ProductosController {
             else
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -68,11 +67,7 @@ public class ProductosController {
     public ResponseEntity<List<Producto>> getProductos() {
         try {
             List<Producto> productos = productosService.getProductos();
-            if (productos.size() > 0)
-                return new ResponseEntity<>(productos, HttpStatus.OK);
-            else{
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
+            return new ResponseEntity<>(productos, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -85,8 +80,6 @@ public class ProductosController {
         try {
             if (producto.getNombre() == null || producto.getNombre().isEmpty())
                 throw new Exception("El nombre del producto es obligatorio");
-            if (producto.getCategoria() == null || producto.getNombre().isEmpty())
-                throw new Exception("La categoria del producto es obligatoria");
             if (producto.getPrecio() == 0 || producto.getPrecio() < 0)
                 throw new Exception("El precio del producto es obligatorio");
             if (producto.getDescripcion() == null || producto.getDescripcion().isEmpty())
