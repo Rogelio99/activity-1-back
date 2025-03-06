@@ -1,0 +1,4 @@
+openapi:
+  expand:
+    api:
+      version: v1.1
