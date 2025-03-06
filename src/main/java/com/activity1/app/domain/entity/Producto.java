@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,19 +22,33 @@ import org.hibernate.annotations.OnDeleteAction;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Schema(description = "Productos de la tienda")
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_producto", unique = true)
     private Long id;
+
     @Column(nullable = false)
+    @Schema(description = "Nombre del producto")
     private String nombre;
+
     @Column(nullable = false)
+    @Schema(description = "Descripción del producto")
     private String descripcion;
+
     @Column(nullable = false)
+    @Schema(description = "Precio del producto")
     private int precio;
+
     @Column(nullable = false)
+    @Schema(description = "Cantidad del producto")
     private int stock;
+
+    @Column(nullable = false)
+    @Schema(description = "Activo del producto")
+    private Boolean activo = true;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "categoria_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
